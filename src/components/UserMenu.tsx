@@ -15,7 +15,6 @@ import {
   Gauge,
   Globe,
   Home,
-  KeyRound,
   LogOut,
   MessageSquare,
   Monitor,
@@ -1612,17 +1611,6 @@ export const UserMenu: React.FC = () => {
             >
               <Download className='w-4 h-4 text-gray-500 dark:text-gray-400' />
               <span className='font-medium'>离线下载</span>
-            </button>
-          )}
-
-          {/* 修改密码按钮 */}
-          {showChangePassword && (
-            <button
-              onClick={handleChangePassword}
-              className='w-full px-3 py-2 text-left flex items-center gap-2.5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-sm'
-            >
-              <KeyRound className='w-4 h-4 text-gray-500 dark:text-gray-400' />
-              <span className='font-medium'>修改密码</span>
             </button>
           )}
 
@@ -3749,6 +3737,7 @@ export const UserMenu: React.FC = () => {
         avatarText={avatarText}
         roleBadgeClassName={roleBadgeClassName}
         showDeviceManagement={storageType !== 'localstorage'}
+        showChangePassword={showChangePassword}
         onOpenEmailSettings={() => {
           setIsProfileCenterOpen(false);
           setIsEmailSettingsOpen(true);
@@ -3758,6 +3747,10 @@ export const UserMenu: React.FC = () => {
           setIsProfileCenterOpen(false);
           setIsDeviceManagementOpen(true);
           loadDevices();
+        }}
+        onOpenChangePassword={() => {
+          setIsProfileCenterOpen(false);
+          handleChangePassword();
         }}
       />
 
