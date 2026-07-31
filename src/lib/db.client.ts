@@ -17,6 +17,7 @@
 import { getAuthInfoFromBrowserCookie, clearAuthCookie } from './auth';
 import { normalizeEpisodeFilterConfig } from './episode-filter';
 import { MangaReadRecord, MangaShelfItem } from './manga.types';
+import { isLoginPathname, resolveLoginPath } from './tv-mode';
 import { DanmakuFilterConfig, EpisodeFilterConfig, SkipConfig } from './types';
 
 // 全局错误触发函数
@@ -661,7 +662,7 @@ export async function fetchWithAuth(
       // 如果在登录页面，跳过刷新逻辑
       if (
         typeof window !== 'undefined' &&
-        window.location.pathname === '/login'
+        isLoginPathname(window.location.pathname)
       ) {
         console.log('[fetchWithAuth] On login page, skipping refresh logic');
         return res;
@@ -707,7 +708,7 @@ export async function fetchWithAuth(
         // 检查当前页面是否已经是登录页，避免重复跳转
         if (
           typeof window !== 'undefined' &&
-          !window.location.pathname.startsWith('/login')
+          !isLoginPathname(window.location.pathname)
         ) {
           // 调用 logout 接口
           try {
@@ -721,7 +722,10 @@ export async function fetchWithAuth(
             clearAuthCookie();
           }
           const currentUrl = window.location.pathname + window.location.search;
-          const loginUrl = new URL('/login', window.location.origin);
+          const loginUrl = new URL(
+            resolveLoginPath(window.location.pathname),
+            window.location.origin
+          );
           loginUrl.searchParams.set('redirect', currentUrl);
           window.location.href = loginUrl.toString();
         }

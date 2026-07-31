@@ -11,6 +11,19 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "224.1.1",
+    date: "2026-07-31",
+    added: [
+      // 无新增内容
+    ],
+    changed: [
+      // 无变更内容
+    ],
+    fixed: [
+    "修复tv模式登录失效跳转/login页面而非/tv/login页面"
+    ]
+  },
+  {
     version: "224.1.0",
     date: "2026-07-31",
     added: [
